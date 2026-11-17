@@ -43,6 +43,13 @@ WidgetValue::WidgetValue(QWidget *parent) :
     ui->label_head1->setFont(headFont);
     // value text
     ui->label_value1->setFont(valueFont);
+
+    headFont.setPixelSize(headFont.pixelSize() - 2);
+    valueFont.setPixelSize(valueFont.pixelSize() - 2);
+    // head text 2
+    ui->label_head2->setFont(headFont);
+    // value text 2
+    ui->label_value2->setFont(valueFont);
     // head rscan dose text
     ui->label_enable->setFont(headFont);
 

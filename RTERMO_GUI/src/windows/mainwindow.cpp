@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setFixedSize(400, 270);
+    setFixedSize(450, 300);
     setWindowTitle("RSCAN DOSE (RTERMO)");
     setupSettingsButton();
     setupClient();
