@@ -53,7 +53,8 @@ public:
 
     enum Key{
         IP,
-        Port
+        Port,
+        dTmax
     };
 
     class ValueRef{

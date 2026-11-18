@@ -27,6 +27,7 @@ private:
     void setupClient();
     void setupConnectWidget();
     void setupTemperatureWidget();
+    void setupWarningWidget();
     void setupTimer();
 
     void enableMainWindow();
@@ -37,7 +38,7 @@ private:
     SettingsWindow* settingsWindow = new SettingsWindow(this);
     QTimer* timer = new QTimer();
     int currentMsgNum = 0;
-    int interval_ms = 10;
+    int interval_ms = 250;
 };
 
 #endif // MAINWINDOW_H

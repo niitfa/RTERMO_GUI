@@ -1,4 +1,4 @@
-<RCC>
+﻿<RCC>
     <qresource prefix="/">
         <file>img/button_icon_start.png</file>
         <file>img/button_icon_pause.png</file>
@@ -17,5 +17,6 @@
 	<file>img/icon_sensivity.png</file>
 	<file>img/icon_file.png</file>
 	<file>img/icon_rwell.png</file>
+	<file>img/icon_warning.png</file>
     </qresource>
 </RCC>

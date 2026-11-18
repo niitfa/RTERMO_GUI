@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setupClient();
     setupConnectWidget();
     setupTemperatureWidget();
+    setupWarningWidget();
     setupTimer();
 }
 
@@ -49,6 +50,7 @@ void MainWindow::setupClient()
 
 void MainWindow::setupConnectWidget()
 {
+    ui->widget_connect->setFixedSize(30, 30);
     ui->widget_connect->setTCPClient(this->client);
     std::function<void()> enableCallback(std::bind(&MainWindow::enableMainWindow, this));
     ui->widget_connect->setConnectionEstablishedCallback(enableCallback);
@@ -63,6 +65,11 @@ void MainWindow::setupTemperatureWidget()
     ui->widget_temperature->setClient(client);
 }
 
+void MainWindow::setupWarningWidget()
+{
+    ui->widget_warning->setClient(client);
+}
+
 void MainWindow::setupTimer()
 {
     timer->setSingleShot(false);
@@ -73,12 +80,14 @@ void MainWindow::setupTimer()
 void MainWindow::enableMainWindow()
 {
     ui->widget_temperature->setEnabled(1);
+    ui->widget_warning->setEnabled(1);
     timer->start();
 }
 
 void MainWindow::disableMainWindow()
 {
     ui->widget_temperature->setEnabled(0);
+    ui->widget_warning->setEnabled(0);
     timer->stop();
 }
 
@@ -90,7 +99,6 @@ void MainWindow::on_pushButton_settings_clicked()
     }
 }
 
-#include <iostream>
 void MainWindow::updateWindow()
 {
     int msgNum = 0;

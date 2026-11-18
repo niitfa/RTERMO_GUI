@@ -28,6 +28,8 @@ public:
     void updateSwitchStatus();
 
     void setClient(RTERMOClient* cli);
+private:
+    bool equalTemperatures();
 
 private slots:
     void on_pushButton_switch_clicked();
@@ -36,6 +38,8 @@ private:
     Ui::WidgetValue *ui;
     QString enabledColorText;
     QString enabledColorText_small;
+    QString enabledColorText_small_equal;
+    QString enabledColorText_small_error;
     QString disabledColorText;
     RTERMOClient* client = nullptr;
 

@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "networksettings.h"
+#include "temperaturesettings.h"
 
 namespace Ui {
 class SettingsWindow;
@@ -25,6 +26,7 @@ private slots:
 private:
     Ui::SettingsWindow *ui;
     NetworkSettings* networkWidget = nullptr;
+    TemperatureSettings* temperatureWidget = nullptr;
 
 private:
     void addCustomWidget(QWidget*);

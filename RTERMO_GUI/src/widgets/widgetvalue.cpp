@@ -1,5 +1,6 @@
 #include "widgetvalue.h"
 #include "ui_widgetvalue.h"
+#include "settings.h"
 
 WidgetValue::WidgetValue(QWidget *parent) :
     QWidget(parent),
@@ -36,7 +37,9 @@ WidgetValue::WidgetValue(QWidget *parent) :
     ui->frame_border->setLayout(ui->verticalLayout_border);
 
     this->enabledColorText =  "color: rgb(50,70,100);";
-    this->enabledColorText_small =  "color: rgb(150,170,190);";
+    this->enabledColorText_small_equal = "color: rgb(150,170,190);";
+    this->enabledColorText_small_error = "color: rgb(150,60,60);";
+    this->enabledColorText_small = this->enabledColorText_small_equal;
     this->disabledColorText = "color: rgb(130,130,130);";
 
     // head text
@@ -85,8 +88,8 @@ void WidgetValue::setEnabled(bool enabled)
         ui->label_value1->setStyleSheet("border-width:0px;" + this->enabledColorText);
         ui->label_head2->setStyleSheet("border-width:0px;" + this->enabledColorText_small);
         ui->label_value2->setStyleSheet("border-width:0px;" + this->enabledColorText_small);
-        ui->label_enable->setStyleSheet("border-width:0px;" +this->enabledColorText);
-        ui->label_icon->setStyleSheet("border-width:0px;" +this->enabledColorText);
+        ui->label_enable->setStyleSheet("border-width:0px;" + this->enabledColorText);
+        ui->label_icon->setStyleSheet("border-width:0px;" + this->enabledColorText);
     }
     else
     {
@@ -109,12 +112,19 @@ void WidgetValue::updateTemperature()
     {
         double t1 = static_cast<double>(client->getTempA()) / 1000.;
         double t2 = static_cast<double>(client->getTempB()) / 1000.;
-        ui->label_value1->setText( QString::number(t1, 'f', 2) + " ℃" );
-        ui->label_value2->setText( QString::number(t2, 'f', 2) + " ℃" );
+        ui->label_value1->setText( QString::number(t1, 'f', 1) + " ℃" );
+        ui->label_value2->setText( QString::number(t2, 'f', 1) + " ℃" );
+        if(equalTemperatures())
+        {
+            ui->label_value2->setStyleSheet("border-width:0px;" + this->enabledColorText_small_equal);
+        }
+        else
+        {
+            ui->label_value2->setStyleSheet("border-width:0px;" + this->enabledColorText_small_error);
+        }
     }
 }
 
-#include <iostream>
 void WidgetValue::updateSwitchStatus()
 {
     if(client)
@@ -135,7 +145,18 @@ void WidgetValue::setClient(RTERMOClient *cli)
     client = cli;
 }
 
-#include <iostream>
+bool WidgetValue::equalTemperatures()
+{
+    bool equal = true;
+    if(client)
+    {
+        int dT_max = Settings::get(Settings::Key::dTmax, Settings::Section::Main).toDouble() * 1000;
+        int dT = qAbs(client->getTempA() - client->getTempB());
+        equal = (dT < dT_max);
+    }
+    return equal;
+}
+
 void WidgetValue::on_pushButton_switch_clicked()
 {
     if(ui->pushButton_switch->isChecked())
